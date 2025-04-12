@@ -14,11 +14,14 @@ export default function Home() {
   
   const { data: exams, isLoading, error } = useQuery({
     queryKey: ['/exams'],
-    queryFn: fetchAvailableExams
+    queryFn: fetchAvailableExams,
+    retry: 3,
+    retryDelay: 1000
   });
 
   useEffect(() => {
     if (error) {
+      console.error("Handling error in useEffect:", error);
       toast({
         title: "Error",
         description: "Failed to load available exams. Please try again later.",

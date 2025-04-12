@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Exam, ExamResult, ExamSubmission, ExamTaken } from '@/types';
 
-const API_BASE_URL = 'https://mcq-service-abzc.onrender.com/api';
+// Use our local server instead of the external API
+const API_BASE_URL = '/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
