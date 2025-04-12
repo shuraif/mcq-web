@@ -164,10 +164,10 @@ export default function Dashboard() {
                         </div>
                       ))}
                     </div>
-                  ) : leaderboard && leaderboard.length > 0 ? (
+                  ) : leaderboard && Array.isArray(leaderboard) && leaderboard.length > 0 ? (
                     <div className="space-y-3">
-                      {leaderboard.slice(0, 5).map((entry) => (
-                        <div key={entry.userId + entry.examId} className="flex justify-between items-center p-3 border rounded-lg">
+                      {leaderboard.slice(0, 5).map((entry, idx) => (
+                        <div key={`${entry.userId}-${entry.examId}-${idx}`} className="flex justify-between items-center p-3 border rounded-lg">
                           <div className="flex flex-col">
                             <span className="font-medium">{entry.examTitle}</span>
                             <span className="text-sm text-slate-500">{new Date(entry.date).toLocaleDateString()}</span>
@@ -282,10 +282,10 @@ export default function Dashboard() {
                     <div className="h-full flex items-center justify-center">
                       <Skeleton className="h-64 w-full" />
                     </div>
-                  ) : leaderboard && leaderboard.length > 0 ? (
+                  ) : leaderboard && Array.isArray(leaderboard) && leaderboard.length > 0 ? (
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart
-                        data={leaderboard.slice(0, 10).reverse()}
+                        data={[...leaderboard].slice(0, Math.min(10, leaderboard.length))}
                         margin={{
                           top: 20,
                           right: 30,
@@ -298,7 +298,7 @@ export default function Dashboard() {
                         <YAxis />
                         <Tooltip
                           formatter={(value, name) => [value, name === 'score' ? 'Score' : name]}
-                          labelFormatter={(index) => `Exam: ${leaderboard[index].examTitle}`}
+                          labelFormatter={(index) => `Exam: ${index < leaderboard.length ? leaderboard[index].examTitle : 'Unknown'}`}
                         />
                         <Legend />
                         <Bar dataKey="score" name="Score" fill="#4ade80" radius={[4, 4, 0, 0]} />
@@ -340,11 +340,11 @@ export default function Dashboard() {
                       </div>
                     ))}
                   </div>
-                ) : leaderboard && leaderboard.length > 0 ? (
+                ) : leaderboard && Array.isArray(leaderboard) && leaderboard.length > 0 ? (
                   <div className="space-y-2">
                     {leaderboard.map((entry, index) => (
                       <div 
-                        key={entry.userId + entry.examId} 
+                        key={`${entry.userId}-${entry.examId}-${index}`}
                         className={`flex justify-between items-center p-4 rounded-lg ${
                           index < 3 
                             ? 'bg-gradient-to-r from-slate-50 to-slate-100 border border-slate-200 shadow-sm' 
