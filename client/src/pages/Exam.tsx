@@ -1,15 +1,14 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRoute, useLocation } from "wouter";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { fetchExamById, startExam, submitExam } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
-import { Exam as ExamType, UserAnswer } from "@/types";
+import { Exam as ExamType, UserAnswer, ExamTaken, ExamResult } from "@/types";
 import ExamHeader from "@/components/ExamHeader";
 import QuestionSection from "@/components/QuestionSection";
 import NavigationControls from "@/components/NavigationControls";
 import QuestionNavigator from "@/components/QuestionNavigator";
 import ReviewModal from "@/components/ReviewModal";
 import { Skeleton } from "@/components/ui/skeleton";
+import { sampleExams, sampleExamTaken, sampleExamResult } from "@/data/sampleData";
 
 export default function Exam() {
   const [, params] = useRoute<{ examId: string }>("/exam/:examId");

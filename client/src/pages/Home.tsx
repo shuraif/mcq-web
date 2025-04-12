@@ -1,34 +1,29 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
-import { fetchAvailableExams } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
 import { Clock, Trophy, ClipboardList } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { sampleExams } from "@/data/sampleData";
+import { Exam } from "@/types";
 
 export default function Home() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   
-  const { data: exams, isLoading, error } = useQuery({
-    queryKey: ['/exams'],
-    queryFn: fetchAvailableExams,
-    retry: 3,
-    retryDelay: 1000
-  });
-
+  const [exams, setExams] = useState(sampleExams);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  // Simulate loading for better UX
   useEffect(() => {
-    if (error) {
-      console.error("Handling error in useEffect:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load available exams. Please try again later.",
-        variant: "destructive",
-      });
-    }
-  }, [error, toast]);
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 800);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleStartExam = (examId: string) => {
     console.log(`Starting exam with ID: ${examId}`);
