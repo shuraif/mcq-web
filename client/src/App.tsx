@@ -4,6 +4,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Exam from "@/pages/Exam";
 import Results from "@/pages/Results";
+import Dashboard from "@/pages/Dashboard";
 import Header from "@/components/Header";
 
 function Router() {
@@ -14,6 +15,7 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/exam/:examId" component={Exam} />
         <Route path="/results/:examId" component={Results} />
+        <Route path="/dashboard" component={Dashboard} />
         <Route component={NotFound} />
       </Switch>
     </>
