@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useRoute, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { fetchExamResult, fetchExamById } from "@/lib/api";
@@ -69,13 +70,17 @@ export default function Results() {
     );
   }
 
+  useEffect(() => {
+    if (error || !result) {
+      toast({
+        title: "Error",
+        description: "Failed to load your exam results. Please try again later.",
+        variant: "destructive",
+      });
+    }
+  }, [error, result, toast]);
+
   if (error || !result) {
-    toast({
-      title: "Error",
-      description: "Failed to load your exam results. Please try again later.",
-      variant: "destructive",
-    });
-    
     return (
       <div className="container mx-auto px-4 py-8 text-center">
         <h2 className="text-2xl font-semibold mb-4">Error Loading Results</h2>

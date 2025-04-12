@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
@@ -16,13 +17,15 @@ export default function Home() {
     queryFn: fetchAvailableExams
   });
 
-  if (error) {
-    toast({
-      title: "Error",
-      description: "Failed to load available exams. Please try again later.",
-      variant: "destructive",
-    });
-  }
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to load available exams. Please try again later.",
+        variant: "destructive",
+      });
+    }
+  }, [error, toast]);
 
   const handleStartExam = (examId: string) => {
     setLocation(`/exam/${examId}`);
