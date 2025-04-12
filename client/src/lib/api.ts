@@ -1,5 +1,13 @@
 import axios from 'axios';
-import { Exam, ExamResult, ExamSubmission, ExamTaken } from '@/types';
+import { 
+  Exam, 
+  ExamResult, 
+  ExamSubmission, 
+  ExamTaken, 
+  LeaderboardEntry, 
+  PerformanceStats,
+  ExamAnalytics
+} from '@/types';
 
 // Use our local server instead of the external API
 const API_BASE_URL = '/api';
@@ -33,6 +41,27 @@ export const submitExam = async (submission: ExamSubmission): Promise<ExamResult
 
 export const fetchExamResult = async (examId: string): Promise<ExamResult> => {
   const response = await api.get(`/exams/${examId}/result`);
+  return response.data;
+};
+
+// Dashboard API endpoints
+export const fetchLeaderboard = async (): Promise<LeaderboardEntry[]> => {
+  const response = await api.get('/dashboard/leaderboard');
+  return response.data;
+};
+
+export const fetchExamLeaderboard = async (examId: string): Promise<LeaderboardEntry[]> => {
+  const response = await api.get(`/dashboard/leaderboard/${examId}`);
+  return response.data;
+};
+
+export const fetchPerformanceStats = async (): Promise<PerformanceStats> => {
+  const response = await api.get('/dashboard/performance');
+  return response.data;
+};
+
+export const fetchExamAnalytics = async (examId: string): Promise<ExamAnalytics> => {
+  const response = await api.get(`/dashboard/analytics/${examId}`);
   return response.data;
 };
 

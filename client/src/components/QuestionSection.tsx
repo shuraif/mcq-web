@@ -50,35 +50,34 @@ export default function QuestionSection({
       </div>
       
       {/* Options */}
-      <RadioGroup 
-        value={selectedOption || ""} 
-        onValueChange={onOptionSelect}
-        className="space-y-3"
-      >
+      <div className="space-y-3">
         {question.options.map((option) => (
           <div 
             key={option.id}
             className={cn(
-              "flex items-start p-3 rounded-lg border transition-colors duration-150",
+              "flex items-start p-4 rounded-lg border cursor-pointer transition-all duration-200",
               selectedOption === option.id 
-                ? "border-secondary bg-slate-50" 
-                : "border-slate-200 hover:border-secondary hover:bg-slate-50"
+                ? "border-blue-500 bg-blue-50 shadow-sm" 
+                : "border-slate-200 hover:border-blue-300 hover:bg-slate-50"
             )}
+            onClick={() => onOptionSelect(option.id)}
           >
-            <RadioGroupItem 
-              value={option.id} 
-              id={option.id} 
-              className="mt-0.5 h-4 w-4 text-secondary focus:ring-secondary border-slate-300"
-            />
-            <Label 
-              htmlFor={option.id}
-              className="ml-3 font-normal cursor-pointer"
-            >
+            <div className={cn(
+              "flex justify-center items-center w-5 h-5 rounded-full border transition-colors",
+              selectedOption === option.id 
+                ? "border-blue-500 bg-blue-500" 
+                : "border-slate-300 bg-white"
+            )}>
+              {selectedOption === option.id && (
+                <div className="w-2 h-2 rounded-full bg-white"></div>
+              )}
+            </div>
+            <div className="ml-3 font-normal">
               {option.text}
-            </Label>
+            </div>
           </div>
         ))}
-      </RadioGroup>
+      </div>
     </div>
   );
 }
