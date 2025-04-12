@@ -31,6 +31,7 @@ export default function Home() {
   }, [error, toast]);
 
   const handleStartExam = (examId: string) => {
+    console.log(`Starting exam with ID: ${examId}`);
     setLocation(`/exam/${examId}`);
   };
 
@@ -88,12 +89,18 @@ export default function Home() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button 
-                    className="w-full bg-secondary hover:bg-indigo-600"
-                    onClick={() => handleStartExam(exam.id)}
-                  >
-                    Start Exam
-                  </Button>
+                  <a href={`/exam/${exam.id}`}>
+                    <Button 
+                      variant="default"
+                      className="w-full bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 cursor-pointer"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleStartExam(exam.id);
+                      }}
+                    >
+                      Start Exam
+                    </Button>
+                  </a>
                 </CardFooter>
               </Card>
             ))}
